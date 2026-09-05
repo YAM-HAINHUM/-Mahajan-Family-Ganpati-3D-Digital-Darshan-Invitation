@@ -4,19 +4,25 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 const previousYears = [
   {
-    src: '/assets/gallery/ganpati_1.png',
-    titleMr: 'मागील वर्षीचे बाप्पा दर्शन १',
-    titleEn: 'Previous Years: Bappa Darshan 1',
+    src: '/assets/gallery/ganpati_2017.png',
+    titleMr: '२०१७ सालचे बाप्पा दर्शन',
+    titleEn: 'Bappa Darshan 2017',
+    descriptionMr: 'महाजन कुटुंबाच्या भक्तिमय आठवणींची सुंदर सुरुवात.',
+    descriptionEn: 'A beautiful beginning to the Mahajan family\'s cherished memories.',
   },
   {
-    src: '/assets/gallery/ganpati_2.png',
-    titleMr: 'मागील वर्षीचे बाप्पा दर्शन २',
-    titleEn: 'Previous Years: Bappa Darshan 2',
+    src: '/assets/gallery/ganpati_2019.png',
+    titleMr: '२०१९ सालचे बाप्पा दर्शन',
+    titleEn: 'Bappa Darshan 2019',
+    descriptionMr: 'प्रेम, श्रद्धा आणि आनंदाने उजळलेले बाप्पांचे मंगल दर्शन.',
+    descriptionEn: 'A blessed darshan filled with devotion, love, and joyful memories.',
   },
   {
-    src: '/assets/gallery/ganpati_3.png',
-    titleMr: 'मागील वर्षीचे बाप्पा दर्शन ३',
-    titleEn: 'Previous Years: Bappa Darshan 3',
+    src: '/assets/gallery/ganpati_2021.png',
+    titleMr: '२०२१ सालचे बाप्पा दर्शन',
+    titleEn: 'Bappa Darshan 2021',
+    descriptionMr: 'कुटुंबाला एकत्र आणणारी बाप्पांच्या आशीर्वादांची आठवण.',
+    descriptionEn: 'A treasured memory of Bappa\'s blessings bringing the family together.',
   },
 ];
 
@@ -158,6 +164,19 @@ export default function PreviousYearsCarousel({ lang = 'mr' }) {
               {lang === 'mr' ? activeImage.titleMr : activeImage.titleEn}
             </span>
           </div>
+          <p
+            className="marathi-text"
+            style={{
+              color: 'rgba(255, 243, 209, 0.78)',
+              fontSize: '0.95rem',
+              lineHeight: 1.5,
+              textAlign: 'center',
+              margin: '0 auto 0.65rem',
+              padding: '0 1rem',
+            }}
+          >
+            {lang === 'mr' ? activeImage.descriptionMr : activeImage.descriptionEn}
+          </p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '0.4rem', paddingBottom: '0.4rem' }}>
             {previousYears.map((image, index) => (
               <button
