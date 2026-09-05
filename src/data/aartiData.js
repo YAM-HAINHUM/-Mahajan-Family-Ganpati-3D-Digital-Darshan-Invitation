@@ -409,6 +409,20 @@ const repairedAartiData = rawAartiData
     };
   });
 
-repairedAartiData.splice(1, 0, restoredSukhkarta);
+repairedAartiData.unshift({
+  id: 'ganpati-bappa-morya',
+  titleMr: 'गणपती बाप्पा मोरया',
+  titleEn: 'Ganpati Bappa Morya',
+  category: 'मंगल घोष',
+  categoryEn: 'Auspicious Chant',
+  composer: 'पारंपरिक',
+  composerEn: 'Traditional',
+  audioSrc: '/assets/audio/Ganpati_Bappa_Morya.mp3',
+  description: 'बाप्पांच्या आगमनावेळी वातावरण मंगलमय करणारा भक्तिभावपूर्ण जयघोष.',
+  descriptionEn: 'A joyful devotional chant welcoming Bappa at the opening of the Darshan.',
+  verses: [],
+});
+
+repairedAartiData.splice(2, 0, restoredSukhkarta);
 
 export const aartiData = repairedAartiData;

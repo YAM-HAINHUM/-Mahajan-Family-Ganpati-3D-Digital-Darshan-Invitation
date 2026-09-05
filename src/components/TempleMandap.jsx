@@ -140,7 +140,7 @@ export default function TempleMandap({ children }) {
       />
 
       {/* Mandap Children */}
-      <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
+      <div style={{ position: 'relative', zIndex: 5, width: '100%' }}>
         {children}
       </div>
     </div>

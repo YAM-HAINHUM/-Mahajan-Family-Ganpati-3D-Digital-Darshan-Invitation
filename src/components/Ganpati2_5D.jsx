@@ -69,12 +69,92 @@ export default function Ganpati2_5D({ mousePos = { x: 0, y: 0 }, isMobile = fals
           willChange: 'transform, opacity',
         }}
       >
+        {/* Incense sticks and slow-rising fragrance smoke around the idol */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            inset: '-12% -25% -2%',
+            zIndex: 4,
+            pointerEvents: 'none',
+          }}
+        >
+          {[-1, 1].map((side) => (
+            <div
+              key={side}
+              style={{
+                position: 'absolute',
+                [side === -1 ? 'left' : 'right']: '2%',
+                bottom: '8%',
+                width: '34px',
+                height: '58px',
+              }}
+            >
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: '50%',
+                  width: '24px',
+                  height: '11px',
+                  transform: 'translateX(-50%)',
+                  borderRadius: '50% 50% 35% 35%',
+                  background: 'linear-gradient(180deg, #E6C875, #7A5314)',
+                  boxShadow: '0 3px 8px rgba(0, 0, 0, 0.55)',
+                }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: '8px',
+                  left: '50%',
+                  width: '3px',
+                  height: '45px',
+                  transform: `translateX(-50%) rotate(${side * 9}deg)`,
+                  transformOrigin: 'bottom center',
+                  background: 'linear-gradient(180deg, #7B4B28, #D09B54)',
+                  borderRadius: '4px',
+                }}
+              />
+              {[0, 1].map((smokeIndex) => (
+                <motion.span
+                  key={smokeIndex}
+                  animate={{
+                    y: [-2, -32, -58],
+                    x: [0, side * (smokeIndex ? 9 : -7), side * (smokeIndex ? -5 : 8)],
+                    scale: [0.55, 1, 1.35],
+                    opacity: [0, 0.58, 0],
+                  }}
+                  transition={{
+                    duration: 3.8 + smokeIndex * 0.7,
+                    repeat: Infinity,
+                    delay: smokeIndex * 1.7 + (side === 1 ? 0.8 : 0),
+                    ease: 'easeOut',
+                  }}
+                  style={{
+                    position: 'absolute',
+                    left: '50%',
+                    bottom: '49px',
+                    width: '30px',
+                    height: '30px',
+                    transform: 'translateX(-50%)',
+                    borderRadius: '50%',
+                    background: 'radial-gradient(circle, rgba(255, 243, 209, 0.7), rgba(205, 188, 170, 0.16) 68%, transparent 72%)',
+                    filter: 'blur(4px)',
+                  }}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+
         {/* Subtle breathing scale (1.000 -> 1.006 -> 1.000) over 7 seconds */}
         <motion.div
           animate={{ scale: [1.0, 1.006, 1.0] }}
           transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
           style={{
             position: 'relative',
+            zIndex: 2,
             borderRadius: '16px',
             overflow: 'hidden',
             border: '2px solid rgba(230, 200, 117, 0.35)',

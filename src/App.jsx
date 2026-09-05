@@ -17,6 +17,7 @@ import BlessingsSection from './components/BlessingsSection';
 import FloatingControls from './components/FloatingControls';
 import MusicPlayer from './components/MusicPlayer';
 import FloatingPetals from './components/FloatingPetals';
+import OpeningFlowerShower from './components/OpeningFlowerShower';
 import { translations } from './data/translations';
 import { aartiData } from './data/aartiData';
 
@@ -83,6 +84,7 @@ export default function App() {
 
       {/* 3. Ambient Floating Marigold Petals */}
       <FloatingPetals />
+      {hasEntered && <OpeningFlowerShower />}
 
       {/* 4. Floating Devotional Controls & Persistent Music Player */}
       {hasEntered && (

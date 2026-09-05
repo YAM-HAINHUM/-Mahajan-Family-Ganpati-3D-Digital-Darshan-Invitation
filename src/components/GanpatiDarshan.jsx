@@ -95,6 +95,7 @@ export default function GanpatiDarshan({ lang = 'mr', t }) {
             opacity: textOpacity,
             y: textY,
             textAlign: 'center',
+            marginTop: '2rem',
             marginBottom: '1.5rem',
             zIndex: 4,
           }}
@@ -116,7 +117,7 @@ export default function GanpatiDarshan({ lang = 'mr', t }) {
               marginBottom: '0.75rem',
             }}
           >
-            {lang === 'mr' ? '✦ दर्शन सोहळा ✦' : '✦ Divine Darshan ✦'}
+            {lang === 'mr' ? '✦ दर्शन सोहळा ✦' : '✦ Ganpati Darshan ✦'}
           </div>
 
           <h2

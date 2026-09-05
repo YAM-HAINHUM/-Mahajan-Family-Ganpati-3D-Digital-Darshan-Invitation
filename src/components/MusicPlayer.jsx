@@ -9,7 +9,7 @@ export default function MusicPlayer({ currentTrackIndex = 0, isPlaying, onToggle
   const [volume, setVolume] = useState(0.85);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [minimized, setMinimized] = useState(false);
+  const [minimized, setMinimized] = useState(true);
 
   const currentTrack = aartiData[currentTrackIndex] || aartiData[0];
 
@@ -24,6 +24,11 @@ export default function MusicPlayer({ currentTrackIndex = 0, isPlaying, onToggle
   }, [isPlaying, currentTrackIndex]);
 
   const handleNext = () => {
+    const nextIdx = (currentTrackIndex + 1) % aartiData.length;
+    onSelectTrack(nextIdx);
+  };
+
+  const handleTrackEnded = () => {
     const nextIdx = (currentTrackIndex + 1) % aartiData.length;
     onSelectTrack(nextIdx);
   };
@@ -73,44 +78,72 @@ export default function MusicPlayer({ currentTrackIndex = 0, isPlaying, onToggle
       <audio
         ref={audioRef}
         src={currentTrack.audioSrc}
-        loop
         preload="auto"
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
+        onEnded={handleTrackEnded}
       />
 
       <AnimatePresence>
         {minimized ? (
           /* Minimized Diya Pill */
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-            onClick={() => setMinimized(false)}
-            style={{
-              background: 'linear-gradient(135deg, #4A0810 0%, #240509 100%)',
-              border: '1.5px solid #C99A3D',
-              borderRadius: '24px',
-              padding: '8px 16px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              cursor: 'pointer',
-              boxShadow: '0 8px 24px rgba(0,0,0,0.8), 0 0 15px rgba(201, 154, 61, 0.3)',
-            }}
-          >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <motion.div
-              animate={isPlaying ? { rotate: 360 } : { rotate: 0 }}
-              transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
-              style={{ width: '22px', height: '22px' }}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              onClick={() => setMinimized(false)}
+              role="button"
+              tabIndex={0}
+              aria-label="Open music player"
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') setMinimized(false);
+              }}
+              style={{
+                background: 'linear-gradient(135deg, #4A0810 0%, #240509 100%)',
+                border: '1.5px solid #C99A3D',
+                borderRadius: '24px',
+                padding: '6px 10px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '7px',
+                cursor: 'pointer',
+                boxShadow: '0 8px 24px rgba(0,0,0,0.8), 0 0 15px rgba(201, 154, 61, 0.3)',
+              }}
             >
-              <img src="/assets/images/diya.svg" alt="Diya" style={{ width: '100%', height: '100%' }} />
+              <motion.div
+                animate={isPlaying ? { rotate: 360 } : { rotate: 0 }}
+                transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
+                style={{ width: '19px', height: '19px' }}
+              >
+                <img src="/assets/images/diya.svg" alt="Diya" style={{ width: '100%', height: '100%' }} />
+              </motion.div>
+              <span className="marathi-text" style={{ maxWidth: '150px', fontSize: '0.76rem', color: '#FFF8E8', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {lang === 'mr' ? currentTrack.titleMr : currentTrack.titleEn}
+              </span>
+              <Maximize2 size={14} color="#E6C875" />
             </motion.div>
-            <span className="marathi-text" style={{ fontSize: '0.85rem', color: '#FFF8E8', fontWeight: 600 }}>
-              {lang === 'mr' ? currentTrack.titleMr : currentTrack.titleEn}
-            </span>
-            <Maximize2 size={14} color="#E6C875" />
-          </motion.div>
+            <button
+              type="button"
+              onClick={onTogglePlay}
+              aria-label={isPlaying ? 'Pause music' : 'Play music'}
+              style={{
+                width: '32px',
+                height: '32px',
+                padding: 0,
+                borderRadius: '50%',
+                border: '1.5px solid #C99A3D',
+                background: 'linear-gradient(180deg, #E6C875 0%, #C99A3D 100%)',
+                color: '#2A0408',
+                display: 'grid',
+                placeItems: 'center',
+                cursor: 'pointer',
+                boxShadow: '0 5px 12px rgba(0,0,0,0.65)',
+              }}
+            >
+              {isPlaying ? <Pause size={15} /> : <Play size={15} style={{ marginLeft: '1px' }} />}
+            </button>
+          </div>
         ) : (
           /* Full Devotional Player */
           <motion.div
@@ -121,8 +154,8 @@ export default function MusicPlayer({ currentTrackIndex = 0, isPlaying, onToggle
               background: 'linear-gradient(145deg, rgba(62, 9, 16, 0.96) 0%, rgba(32, 5, 8, 0.98) 100%)',
               border: '2px solid #C99A3D',
               borderRadius: '12px',
-              padding: '14px 18px',
-              width: 'clamp(280px, 85vw, 340px)',
+              padding: '10px 12px',
+              width: 'clamp(250px, 78vw, 290px)',
               boxShadow: '0 15px 35px rgba(0,0,0,0.9), 0 0 25px rgba(201, 154, 61, 0.25)',
               backdropFilter: 'blur(10px)',
               color: '#FFF8E8',
