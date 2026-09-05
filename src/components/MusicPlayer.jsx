@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Minimize2, Maximize2, Music } from 'lucide-react';
 import { aartiData } from '../data/aartiData';
 
-export default function MusicPlayer({ currentTrackIndex = 0, isPlaying, onTogglePlay, onSelectTrack, t, lang = 'mr' }) {
+export default function MusicPlayer({ currentTrackIndex = 0, isPlaying, onTogglePlay, onSelectTrack, isOpeningAudioSequence = false, t, lang = 'mr' }) {
   const audioRef = useRef(null);
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(0.85);
@@ -29,8 +29,9 @@ export default function MusicPlayer({ currentTrackIndex = 0, isPlaying, onToggle
   };
 
   const handleTrackEnded = () => {
-    const nextIdx = (currentTrackIndex + 1) % aartiData.length;
-    onSelectTrack(nextIdx);
+    if (isOpeningAudioSequence && currentTrackIndex === 0) {
+      onSelectTrack(1, { automatic: true });
+    }
   };
 
   const handlePrev = () => {
@@ -78,6 +79,7 @@ export default function MusicPlayer({ currentTrackIndex = 0, isPlaying, onToggle
       <audio
         ref={audioRef}
         src={currentTrack.audioSrc}
+        loop={isOpeningAudioSequence && currentTrackIndex === 1}
         preload="auto"
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}

@@ -13,7 +13,7 @@ export const eventData = {
     cityMr: "डोंबिवली (पश्चिम)",
     stateMr: "महाराष्ट्र",
     fullAddressEn: "A 303 PANDURANG TOWER\nGANESH NAGAR DOMBIVLI WEST\nDOMBIVLI, MAHARASHTRA 421202\nIndia",
-    fullAddressMr: "३०३, पांडुरंग टॉवर, गणेश नगर, डोंबिवली (पश्चिम), महाराष्ट्र ४२१२०२",
+    fullAddressMr: "ए ३०३, पांडुरंग टॉवर, गणेश नगर, डोंबिवली (पश्चिम), महाराष्ट्र ४२१२०२",
     googleMapsUrl: "https://maps.app.goo.gl/Qciy9hQEEfUtXiis9"
   },
 

@@ -33,6 +33,7 @@ export default function App() {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [isOpeningAudioSequence, setIsOpeningAudioSequence] = useState(false);
 
   const t = translations[lang] || translations.mr;
 
@@ -40,6 +41,7 @@ export default function App() {
     setLang(selectedLang);
     setHasEntered(true);
     setIsPlaying(true);
+    setIsOpeningAudioSequence(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -56,9 +58,10 @@ export default function App() {
     setIsPlaying((prev) => !prev);
   };
 
-  const handleSelectTrack = (index) => {
+  const handleSelectTrack = (index, { automatic = false } = {}) => {
     setCurrentTrackIndex(index);
     setIsPlaying(true);
+    if (!automatic) setIsOpeningAudioSequence(false);
   };
 
   const handleScrollToDownload = () => {
@@ -100,6 +103,7 @@ export default function App() {
             isPlaying={isPlaying}
             onTogglePlay={handleToggleMusic}
             onSelectTrack={handleSelectTrack}
+            isOpeningAudioSequence={isOpeningAudioSequence}
             t={t}
             lang={lang}
           />

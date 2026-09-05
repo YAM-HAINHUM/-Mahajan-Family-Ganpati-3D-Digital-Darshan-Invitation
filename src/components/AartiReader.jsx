@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ZoomIn, ZoomOut, Play, Download, BookOpen, Volume2 } from 'lucide-react';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 export default function AartiReader({ aarti, onClose, onPlayAudio, t, lang = 'mr' }) {
   const [fontSize, setFontSize] = useState(18);
   const [activeTab, setActiveTab] = useState('original');
+  const [meaningLanguage, setMeaningLanguage] = useState(lang);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const readerRef = useRef(null);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -23,6 +28,7 @@ export default function AartiReader({ aarti, onClose, onPlayAudio, t, lang = 'mr
   const getCategory = () => lang === 'en' ? aarti.categoryEn : aarti.category;
   const getComposer = () => lang === 'en' ? aarti.composerEn : aarti.composer;
   const getDescription = () => lang === 'en' ? aarti.descriptionEn : aarti.description;
+  const getMeaningText = (verse) => meaningLanguage === 'mr' ? (verse.meaningMr || verse.original) : verse.meaning;
 
   const handleDownloadText = () => {
     const versesText = aarti.verses
@@ -35,6 +41,59 @@ export default function AartiReader({ aarti, onClose, onPlayAudio, t, lang = 'mr
     link.href = URL.createObjectURL(blob);
     link.download = `${aarti.id}_text.txt`;
     link.click();
+    URL.revokeObjectURL(link.href);
+  };
+
+  const getDownloadCanvas = () => html2canvas(readerRef.current, {
+    backgroundColor: '#FFF9E9',
+    scale: 2,
+    useCORS: true,
+    logging: false,
+  });
+
+  const handleDownloadImage = async () => {
+    if (!readerRef.current) return;
+    setIsDownloading(true);
+    try {
+      const canvas = await getDownloadCanvas();
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png');
+      link.download = `${aarti.id}_${lang}_aarti.png`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    } catch (error) {
+      console.error('Error generating Aarti image:', error);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
+  const handleDownloadPdf = async () => {
+    if (!readerRef.current) return;
+    setIsDownloading(true);
+    try {
+      const canvas = await getDownloadCanvas();
+      const imageData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+      const margin = 10;
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const imageWidth = pageWidth - margin * 2;
+      const imageHeight = (canvas.height * imageWidth) / canvas.width;
+      const contentHeight = pageHeight - margin * 2;
+      const pageCount = Math.max(1, Math.ceil(imageHeight / contentHeight));
+
+      for (let pageIndex = 0; pageIndex < pageCount; pageIndex += 1) {
+        if (pageIndex > 0) pdf.addPage();
+        pdf.addImage(imageData, 'PNG', margin, margin - pageIndex * contentHeight, imageWidth, imageHeight);
+      }
+
+      pdf.save(`${aarti.id}_${lang}_aarti.pdf`);
+    } catch (error) {
+      console.error('Error generating Aarti PDF:', error);
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   return createPortal(
@@ -47,6 +106,7 @@ export default function AartiReader({ aarti, onClose, onPlayAudio, t, lang = 'mr
         aria-label={lang === 'en' ? aarti.titleEn : aarti.titleMr}
       >
         <motion.div
+          ref={readerRef}
           className="aarti-manuscript"
           onClick={(e) => e.stopPropagation()}
           initial={{ opacity: 0, scale: 0.9, rotateX: 10 }}
@@ -121,6 +181,28 @@ export default function AartiReader({ aarti, onClose, onPlayAudio, t, lang = 'mr
                 title="मजकूर डाऊनलोड करा"
               >
                 <Download size={15} />
+              </button>
+
+              <button
+                onClick={handleDownloadPdf}
+                disabled={isDownloading}
+                className="gold-btn-outline"
+                style={{ padding: '4px 8px', fontSize: '0.8rem' }}
+                title="Download Aarti as PDF"
+                aria-label="Download Aarti as PDF"
+              >
+                <span style={{ fontSize: '0.7rem', fontWeight: 700 }}>PDF</span>
+              </button>
+
+              <button
+                onClick={handleDownloadImage}
+                disabled={isDownloading}
+                className="gold-btn-outline"
+                style={{ padding: '4px 8px', fontSize: '0.8rem' }}
+                title="Download Aarti as image"
+                aria-label="Download Aarti as image"
+              >
+                <span style={{ fontSize: '0.7rem', fontWeight: 700 }}>PNG</span>
               </button>
 
               <button
@@ -243,6 +325,50 @@ export default function AartiReader({ aarti, onClose, onPlayAudio, t, lang = 'mr
                 textAlign: activeTab === 'original' ? 'center' : 'left',
               }}
             >
+              {activeTab === 'meaning' && (
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    marginBottom: '1.5rem',
+                    paddingBottom: '1rem',
+                    borderBottom: '1px solid rgba(201, 154, 61, 0.3)',
+                  }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setMeaningLanguage('mr')}
+                    style={{
+                      padding: '6px 12px',
+                      border: '1px solid #8E1B23',
+                      borderRadius: '4px',
+                      background: meaningLanguage === 'mr' ? '#8E1B23' : 'transparent',
+                      color: meaningLanguage === 'mr' ? '#FFF9E9' : '#8E1B23',
+                      fontFamily: 'var(--font-marathi)',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    मराठी अर्थ
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setMeaningLanguage('en')}
+                    style={{
+                      padding: '6px 12px',
+                      border: '1px solid #8E1B23',
+                      borderRadius: '4px',
+                      background: meaningLanguage === 'en' ? '#8E1B23' : 'transparent',
+                      color: meaningLanguage === 'en' ? '#FFF9E9' : '#8E1B23',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    English Meaning
+                  </button>
+                </div>
+              )}
               {aarti.verses.map((verse, idx) => (
                 <div
                   key={idx}
@@ -269,7 +395,12 @@ export default function AartiReader({ aarti, onClose, onPlayAudio, t, lang = 'mr
                       >
                         Verse {idx + 1}
                       </div>
-                      <p style={{ color: '#3A1810', lineHeight: 1.7 }}>{verse.meaning}</p>
+                      <p
+                        className={meaningLanguage === 'mr' ? 'marathi-text' : undefined}
+                        style={{ color: '#3A1810', lineHeight: 1.7 }}
+                      >
+                        {getMeaningText(verse)}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -278,7 +409,9 @@ export default function AartiReader({ aarti, onClose, onPlayAudio, t, lang = 'mr
 
             {/* Bottom Auspicious Blessing */}
             <div style={{ marginTop: '2rem', color: '#8E1B23', fontWeight: 700, fontSize: '1.1rem' }}>
-              {lang === 'en' ? 'Ganpati Bappa Morya, Mangalmurti Morya' : '॥ गणपती बाप्पा मोरया, मंगलमूर्ती मोरया ॥'}
+              {activeTab === 'pronunciation' || activeTab === 'meaning' || lang === 'en'
+                ? 'Ganpati Bappa Morya, Mangalmurti Morya'
+                : '॥ गणपती बाप्पा मोरया, मंगलमूर्ती मोरया ॥'}
             </div>
           </div>
         </motion.div>
