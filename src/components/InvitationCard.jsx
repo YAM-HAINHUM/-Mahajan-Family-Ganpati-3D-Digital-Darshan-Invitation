@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, MailOpen, Share2, Download, Check, Sparkles } from 'lucide-react';
+import { Mail, MailOpen, Share2, Check, FileText, Image, Loader2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 import { eventData } from '../data/eventData';
 
-export default function InvitationCard({ t, lang = 'mr', onScrollToDownload }) {
+export default function InvitationCard({ t, lang = 'mr' }) {
   const [isOpen, setIsOpen] = useState(false);
   const [shared, setShared] = useState(false);
+  const [isGeneratingImg, setIsGeneratingImg] = useState(false);
+  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+  const [downloadSuccess, setDownloadSuccess] = useState(false);
+  const cardRef = useRef(null);
 
   const handleToggleCard = () => {
     const nextState = !isOpen;
@@ -38,6 +44,43 @@ export default function InvitationCard({ t, lang = 'mr', onScrollToDownload }) {
       navigator.clipboard?.writeText(window.location.href);
       setShared(true);
       setTimeout(() => setShared(false), 2500);
+    }
+  };
+
+  const handleDownloadImage = async () => {
+    if (!cardRef.current) return;
+    setIsGeneratingImg(true);
+    try {
+      const canvas = await html2canvas(cardRef.current, { scale: 2.5, useCORS: true, backgroundColor: '#35070C' });
+      const link = document.createElement('a');
+      link.download = `Ganpati_Invitation_Mahajan_Family_${lang.toUpperCase()}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      setDownloadSuccess(true);
+      setTimeout(() => setDownloadSuccess(false), 3000);
+    } catch (err) {
+      console.error('Error generating image invitation:', err);
+    } finally {
+      setIsGeneratingImg(false);
+    }
+  };
+
+  const handleDownloadPdf = async () => {
+    if (!cardRef.current) return;
+    setIsGeneratingPdf(true);
+    try {
+      const canvas = await html2canvas(cardRef.current, { scale: 2, useCORS: true, backgroundColor: '#35070C' });
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a5' });
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save(`Ganpati_Invitation_Mahajan_Family_${lang.toUpperCase()}.pdf`);
+      setDownloadSuccess(true);
+      setTimeout(() => setDownloadSuccess(false), 3000);
+    } catch (err) {
+      console.error('Error generating PDF invitation:', err);
+    } finally {
+      setIsGeneratingPdf(false);
     }
   };
 
@@ -202,6 +245,7 @@ export default function InvitationCard({ t, lang = 'mr', onScrollToDownload }) {
               transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               className="gold-card"
               id="printable-invitation-card"
+              ref={cardRef}
               style={{
                 background: 'linear-gradient(165deg, #4A0810 0%, #2A0408 50%, #1A0205 100%)',
                 border: '3px double #E6C875',
@@ -252,6 +296,24 @@ export default function InvitationCard({ t, lang = 'mr', onScrollToDownload }) {
               >
                 {t.card.insideSub}
               </p>
+
+              <div
+                style={{
+                  width: '180px',
+                  height: '180px',
+                  margin: '1rem auto 1.25rem',
+                  borderRadius: '50%',
+                  overflow: 'hidden',
+                  border: '3px solid #E6C875',
+                  boxShadow: '0 6px 20px rgba(0,0,0,0.8), 0 0 20px rgba(230, 200, 117, 0.4)',
+                }}
+              >
+                <img
+                  src="/assets/images/ganpati.jpg"
+                  alt="Shri Ganpati"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              </div>
 
               {/* Family Highlight Box */}
               <div
@@ -320,7 +382,17 @@ export default function InvitationCard({ t, lang = 'mr', onScrollToDownload }) {
                 >
                   🌸 {t.card.insideSthapana}
                 </div>
+                <div style={{ fontSize: '0.95rem', color: '#E6C875', marginTop: '0.5rem' }}>
+                  📅 {lang === 'mr' ? eventData.sthapana.dateMr : eventData.sthapana.date}
+                </div>
+                <div style={{ fontSize: '0.9rem', color: '#E6C875', marginTop: '0.35rem' }}>
+                  🕰️ {lang === 'mr' ? eventData.sthapana.timeMr : eventData.sthapana.time}
+                </div>
               </div>
+
+              <p className="marathi-text" style={{ fontSize: '0.9rem', color: '#F8F0DC', opacity: 0.9, marginBottom: '1.5rem' }}>
+                📍 {lang === 'mr' ? eventData.address.fullAddressMr : eventData.address.fullAddressEn}
+              </p>
 
               {/* Heartfelt Note */}
               <p
@@ -363,9 +435,14 @@ export default function InvitationCard({ t, lang = 'mr', onScrollToDownload }) {
                   {t.card.closeBtn}
                 </button>
 
-                <button onClick={onScrollToDownload} className="gold-btn">
-                  <Download size={18} />
-                  {t.download.title}
+                <button onClick={handleDownloadImage} disabled={isGeneratingImg} className="gold-btn">
+                  {isGeneratingImg ? <Loader2 size={18} className="animate-spin" /> : <Image size={18} />}
+                  {isGeneratingImg ? t.download.generating : t.download.asImage}
+                </button>
+
+                <button onClick={handleDownloadPdf} disabled={isGeneratingPdf} className="gold-btn-outline">
+                  {isGeneratingPdf ? <Loader2 size={18} className="animate-spin" /> : <FileText size={18} />}
+                  {isGeneratingPdf ? t.download.generating : t.download.asPdf}
                 </button>
 
                 <button onClick={handleShare} className="gold-btn-outline">
@@ -373,6 +450,13 @@ export default function InvitationCard({ t, lang = 'mr', onScrollToDownload }) {
                   {shared ? t.linkCopied : t.shareBtn}
                 </button>
               </div>
+
+              {downloadSuccess && (
+                <div style={{ textAlign: 'center', marginTop: '1.5rem', color: '#4ADE80', fontFamily: 'var(--font-marathi)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                  <Check size={20} />
+                  <span>आमंत्रण पत्रिका यशस्वीरीत्या डाऊनलोड झाली! / Download Successful!</span>
+                </div>
+              )}
             </motion.div>
           )}
         </div>

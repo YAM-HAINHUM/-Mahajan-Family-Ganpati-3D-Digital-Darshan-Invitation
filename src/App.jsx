@@ -5,7 +5,6 @@ import GanpatiDarshan from './components/GanpatiDarshan';
 import Hero from './components/Hero';
 import Invitation from './components/Invitation';
 import InvitationCard from './components/InvitationCard';
-import DownloadInvitation from './components/DownloadInvitation';
 import EventTimeline from './components/EventTimeline';
 import InvitationMessage from './components/InvitationMessage';
 import AartiSection from './components/AartiSection';
@@ -16,6 +15,7 @@ import QRSection from './components/QRSection';
 import BlessingsSection from './components/BlessingsSection';
 import FloatingControls from './components/FloatingControls';
 import MusicPlayer from './components/MusicPlayer';
+import FloatingWhatsApp from './components/FloatingWhatsApp';
 import FloatingPetals from './components/FloatingPetals';
 import OpeningFlowerShower from './components/OpeningFlowerShower';
 import { translations } from './data/translations';
@@ -34,6 +34,7 @@ export default function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isOpeningAudioSequence, setIsOpeningAudioSequence] = useState(false);
+  const [isMusicMinimized, setIsMusicMinimized] = useState(false);
 
   const t = translations[lang] || translations.mr;
 
@@ -62,11 +63,6 @@ export default function App() {
     setCurrentTrackIndex(index);
     setIsPlaying(true);
     if (!automatic) setIsOpeningAudioSequence(false);
-  };
-
-  const handleScrollToDownload = () => {
-    const el = document.getElementById('download-section');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -104,9 +100,11 @@ export default function App() {
             onTogglePlay={handleToggleMusic}
             onSelectTrack={handleSelectTrack}
             isOpeningAudioSequence={isOpeningAudioSequence}
+            onMinimizedChange={setIsMusicMinimized}
             t={t}
             lang={lang}
           />
+          <FloatingWhatsApp lang={lang} isMusicMinimized={isMusicMinimized} />
         </>
       )}
 
@@ -125,13 +123,9 @@ export default function App() {
         <InvitationCard
           t={t}
           lang={lang}
-          onScrollToDownload={handleScrollToDownload}
         />
 
-        {/* Phase 6: Standalone Image & PDF Invitation Download System */}
-        <DownloadInvitation t={t} lang={lang} />
-
-        {/* Phase 7: Sacred Moments & Temple Ritual Timeline */}
+        {/* Phase 6: Sacred Moments & Temple Ritual Timeline */}
         <EventTimeline t={t} lang={lang} />
 
         {/* Phase 8: Heartfelt Personal Message from Mahajan Family */}

@@ -73,7 +73,7 @@ export default function QRSection({ t, lang = 'mr' }) {
               fontFamily: 'var(--font-marathi)',
             }}
           >
-            {lang === 'mr' ? '✦ डिजिटल आमंत्रण ✦' : '✦ Digital Invitation ✦'}
+            {lang === 'mr' ? '✦ पत्ता व लोकेशन ✦' : '✦ Address & Location ✦'}
           </span>
           <h2
             className="marathi-text"
@@ -156,7 +156,7 @@ export default function QRSection({ t, lang = 'mr' }) {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', width: '100%', maxWidth: '280px' }}>
             <button onClick={handleShare} className="gold-btn">
               {shared ? <Check size={18} color="#2A1712" /> : <Share2 size={18} />}
-              {shared ? t.linkCopied : t.shareBtn}
+              {shared ? t.linkCopied : t.qrShareBtn}
             </button>
 
             <button onClick={handleDownloadQR} className="gold-btn-outline">

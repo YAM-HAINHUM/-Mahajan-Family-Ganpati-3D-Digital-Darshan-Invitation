@@ -119,15 +119,16 @@ export const translations = {
     emailBtn: "ईमेल पाठवा",
 
     // QR Section
-    qrTitle: "दर्शन सर्वांपर्यंत पोहोचवा",
-    qrSub: "हा QR कोड स्कॅन करून आपल्या मोबाईलवर डिजिटल आमंत्रण उघडा किंवा आप्तेष्टांना पाठवा.",
+    qrTitle: "आमच्या घरी येण्याचा मार्ग",
+    qrSub: "हा QR कोड स्कॅन करून थेट पत्ता आणि लोकेशन मिळवा.",
+    qrShareBtn: "लोकेशन शेअर करा",
     shareBtn: "आमंत्रण शेअर करा",
     downloadQrBtn: "QR डाऊनलोड करा",
     linkCopied: "लिंक कॉपी झाली!",
 
     // Final Blessing
     finalTitle: "आपली उपस्थिती हीच बाप्पांच्या चरणी आमच्यासाठी सर्वात मोठी भेट आहे.",
-    finalSalutation: "गणपती बाप्पा मोरया! पुढच्या वर्षी लवकर या!",
+    finalSalutation: "गणपती बाप्पा मोरया!",
     finalBlessing: "श्री विघ्नहर्ता आपल्या सर्व मनोकामना पूर्ण करोत, आपल्या संसारात सुख, शांती आणि भरभराट नांदो.",
     finalSign: "प्रेम आणि भक्तीपूर्वक — महाजन परिवार",
 
@@ -259,15 +260,16 @@ export const translations = {
     emailBtn: "Email",
 
     // QR Section
-    qrTitle: "Share the Darshan",
-    qrSub: "Scan this QR code to open the digital invitation on your mobile device or share with loved ones.",
+    qrTitle: "Find Our Home",
+    qrSub: "Scan this QR code to get the direct address and location.",
+    qrShareBtn: "Share Location",
     shareBtn: "Share Invitation",
     downloadQrBtn: "Download QR",
     linkCopied: "Invitation Link Copied!",
 
     // Final Blessing
     finalTitle: "Your presence is the most beautiful offering we could receive at Bappa's feet.",
-    finalSalutation: "Ganpati Bappa Morya! Come back next year!",
+    finalSalutation: "Ganpati Bappa Morya!",
     finalBlessing: "May Lord Ganesha remove all obstacles and shower your home with everlasting peace, health, and prosperity.",
     finalSign: "With love & devotion — The Mahajan Family",
 

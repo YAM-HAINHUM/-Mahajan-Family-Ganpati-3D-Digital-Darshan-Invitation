@@ -3,15 +3,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Minimize2, Maximize2, Music } from 'lucide-react';
 import { aartiData } from '../data/aartiData';
 
-export default function MusicPlayer({ currentTrackIndex = 0, isPlaying, onTogglePlay, onSelectTrack, isOpeningAudioSequence = false, t, lang = 'mr' }) {
+export default function MusicPlayer({ currentTrackIndex = 0, isPlaying, onTogglePlay, onSelectTrack, isOpeningAudioSequence = false, onMinimizedChange, t, lang = 'mr' }) {
   const audioRef = useRef(null);
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(0.85);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [minimized, setMinimized] = useState(true);
+  const [minimized, setMinimized] = useState(false);
 
   const currentTrack = aartiData[currentTrackIndex] || aartiData[0];
+
+  useEffect(() => {
+    onMinimizedChange?.(minimized);
+  }, [minimized, onMinimizedChange]);
 
   useEffect(() => {
     if (audioRef.current) {

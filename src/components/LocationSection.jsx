@@ -122,7 +122,7 @@ export default function LocationSection({ t, lang = 'mr' }) {
                     fontWeight: 600,
                   }}
                 >
-                  {lang === 'mr' ? eventData.address.fullAddressMr : eventData.address.fullAddressEn}
+                  {eventData.address.fullAddressMr}
                 </p>
                 <p style={{ fontSize: '0.95rem', color: '#F8F0DC', marginTop: '0.6rem', opacity: 0.8, whiteSpace: 'pre-line' }}>
                   {eventData.address.fullAddressEn}
