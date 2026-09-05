@@ -1,0 +1,475 @@
+﻿/* ==========================================================================
+   MAHAJAN FAMILY GANPATI INVITATION - ROYAL MAHARASHTRIAN DESIGN SYSTEM
+   ========================================================================== */
+
+:root {
+  /* Royal Devotional Palette */
+  --color-maroon-deep: #4A0B12;
+  --color-maroon: #650F18;
+  --color-red-trad: #8E1B23;
+  --color-brown-dark: #2A1712;
+  --color-brown-muted: #76584A;
+  --color-gold-antique: #C99A3D;
+  --color-gold-warm: #E6C875;
+  --color-gold-light: #FFF3D1;
+  --color-ivory: #F8F0DC;
+  --color-cream: #FFF8E8;
+  --color-saffron: #E25822;
+
+  /* Typography */
+  --font-marathi: 'Noto Serif Devanagari', serif;
+  --font-heading: 'Cormorant Garamond', 'Noto Serif Devanagari', Georgia, serif;
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Elevation & Shadows */
+  --shadow-divine: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 50px rgba(201, 154, 61, 0.15);
+  --shadow-gold-glow: 0 0 30px rgba(230, 200, 117, 0.35);
+  --shadow-curtain: inset 0 0 100px rgba(0, 0, 0, 0.9), 0 25px 50px rgba(0, 0, 0, 0.8);
+  --shadow-card: 0 12px 36px rgba(18, 6, 8, 0.65), 0 1px 0 rgba(230, 200, 117, 0.2);
+
+  /* Transitions */
+  --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  background-color: var(--color-maroon-deep);
+  color: var(--color-cream);
+  font-family: var(--font-ui);
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at 50% 20%, #7A141E 0%, #4D0911 45%, #24080B 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Texture Overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: radial-gradient(rgba(230, 200, 117, 0.04) 1px, transparent 0);
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Typography Utilities */
+.marathi-text {
+  font-family: var(--font-marathi);
+}
+
+.heading-font {
+  font-family: var(--font-heading);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-brown-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold-antique);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold-warm);
+}
+
+/* Selection */
+::selection {
+  background: var(--color-gold-antique);
+  color: var(--color-maroon-deep);
+}
+
+/* Traditional Ornamental Containers */
+.mandap-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* Traditional Gold Borders & Frames */
+.gold-card {
+  background: linear-gradient(145deg, rgba(82, 13, 20, 0.9) 0%, rgba(42, 23, 18, 0.95) 100%);
+  border: 1px solid rgba(201, 154, 61, 0.35);
+  position: relative;
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(8px);
+}
+
+.gold-card::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
+  border: 1px solid rgba(230, 200, 117, 0.15);
+  pointer-events: none;
+}
+
+/* Traditional Corner Embellishments */
+.corner-ornament {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--color-gold-antique);
+  border-style: solid;
+  pointer-events: none;
+}
+.corner-tl { top: 6px; left: 6px; border-width: 2px 0 0 2px; }
+.corner-tr { top: 6px; right: 6px; border-width: 2px 2px 0 0; }
+.corner-bl { bottom: 6px; left: 6px; border-width: 0 0 2px 2px; }
+.corner-br { bottom: 6px; right: 6px; border-width: 0 2px 2px 0; }
+
+/* Buttons */
+.gold-btn {
+  background: linear-gradient(180deg, #E6C875 0%, #C99A3D 50%, #9E7422 100%);
+  color: #2A1712;
+  font-weight: 700;
+  padding: 0.85rem 1.8rem;
+  border-radius: 4px;
+  border: 1px solid #FFF3D1;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-family: var(--font-marathi);
+  letter-spacing: 0.02em;
+}
+
+.gold-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(201, 154, 61, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  filter: brightness(1.08);
+}
+
+.gold-btn-outline {
+  background: rgba(60, 12, 17, 0.6);
+  color: var(--color-gold-warm);
+  border: 1px solid var(--color-gold-antique);
+  padding: 0.85rem 1.6rem;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-family: var(--font-marathi);
+}
+
+.gold-btn-outline:hover {
+  background: rgba(201, 154, 61, 0.15);
+  border-color: var(--color-gold-warm);
+  color: var(--color-gold-light);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   3D VELVET CURTAIN STAGE
+   ========================================================================== */
+.curtain-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  perspective: 1400px;
+  perspective-origin: 50% 50%;
+  overflow: hidden;
+  display: flex;
+}
+
+.curtain-panel {
+  flex: 1;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-curtain);
+  will-change: transform, opacity;
+}
+
+.curtain-left {
+  transform-origin: left center;
+  background: 
+    linear-gradient(90deg, 
+      #35070C 0%, 
+      #70101B 15%, 
+      #4D0A11 25%, 
+      #8E1825 45%, 
+      #5C0D15 60%, 
+      #831522 75%, 
+      #42080E 90%, 
+      #2B0408 100%
+    );
+  border-right: 2px solid rgba(230, 200, 117, 0.4);
+}
+
+.curtain-right {
+  transform-origin: right center;
+  background: 
+    linear-gradient(-90deg, 
+      #35070C 0%, 
+      #70101B 15%, 
+      #4D0A11 25%, 
+      #8E1825 45%, 
+      #5C0D15 60%, 
+      #831522 75%, 
+      #42080E 90%, 
+      #2B0408 100%
+    );
+  border-left: 2px solid rgba(230, 200, 117, 0.4);
+}
+
+/* Velvet Fabric Folds simulation */
+.curtain-folds {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    rgba(0, 0, 0, 0.5) 20px,
+    transparent 45px,
+    rgba(255, 255, 255, 0.08) 65px,
+    transparent 85px
+  );
+  mix-blend-mode: overlay;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.curtain-texture {
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/images/texture.jpg');
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: soft-light;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Curtain Top Pelmet / Toran */
+.curtain-pelmet {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: linear-gradient(180deg, #2E0509 0%, #68101A 70%, transparent 100%);
+  border-bottom: 2px solid var(--color-gold-antique);
+  z-index: 102;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+}
+
+/* Sacred Center Gateway on Curtains */
+.curtain-center-seal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 105;
+  text-align: center;
+  width: 90%;
+  max-width: 480px;
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   BREATHING AURA & SACRED LIGHTS
+   ========================================================================== */
+@keyframes auraPulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.82;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 1;
+    filter: drop-shadow(0 0 45px rgba(230, 200, 117, 0.6));
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.82;
+  }
+}
+
+.golden-aura {
+  animation: auraPulse 7s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes slowRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.mandala-spin {
+  animation: slowRotate 90s linear infinite;
+  will-change: transform;
+}
+
+/* Diya Flame Flicker */
+@keyframes flameFlicker {
+  0% { transform: scale(1) rotate(0deg); opacity: 0.9; }
+  25% { transform: scale(1.04, 0.98) rotate(-1.5deg); opacity: 1; }
+  50% { transform: scale(0.98, 1.05) rotate(1deg); opacity: 0.85; }
+  75% { transform: scale(1.02, 1.01) rotate(-0.5deg); opacity: 0.95; }
+  100% { transform: scale(1) rotate(0deg); opacity: 0.9; }
+}
+
+.diya-flame {
+  animation: flameFlicker 1.8s ease-in-out infinite alternate;
+  transform-origin: bottom center;
+}
+
+/* ==========================================================================
+   AARTI MANUSCRIPT READER MODAL
+   ========================================================================== */
+.aarti-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 4, 6, 0.88);
+  backdrop-filter: blur(12px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  overflow-y: auto;
+}
+
+.aarti-manuscript {
+  background: #FFF9E9;
+  background-image: 
+    radial-gradient(#E8D5B0 1px, transparent 1px),
+    linear-gradient(180deg, #FBF4E0 0%, #FFF9EC 50%, #F5E8CB 100%);
+  background-size: 24px 24px, 100% 100%;
+  color: #351C15;
+  width: 100%;
+  max-width: 680px;
+  max-height: 88vh;
+  border-radius: 6px;
+  border: 4px double #A67C2E;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), inset 0 0 40px rgba(184, 134, 45, 0.2);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.aarti-manuscript-inner {
+  padding: 2rem 2.5rem;
+  overflow-y: auto;
+  min-height: 0;
+  font-family: var(--font-marathi);
+  line-height: 2.1;
+  text-align: center;
+}
+
+/* ==========================================================================
+   FLOATING DIYA AUDIO CONTROLLER
+   ========================================================================== */
+.audio-floater {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 80;
+  background: linear-gradient(135deg, rgba(74, 11, 18, 0.95), rgba(42, 23, 18, 0.95));
+  border: 1.5px solid var(--color-gold-antique);
+  border-radius: 9999px;
+  padding: 8px 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(201, 154, 61, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  backdrop-filter: blur(8px);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN & REDUCED MOTION
+   ========================================================================== */
+@media (max-width: 768px) {
+  .mandap-container {
+    padding: 0 1rem;
+  }
+  .aarti-manuscript-inner {
+    padding: 1.25rem 1rem;
+    line-height: 1.9;
+  }
+  .aarti-manuscript {
+    max-height: calc(100vh - 2rem);
+  }
+  .aarti-reader-header {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .aarti-reader-controls {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .audio-floater {
+    bottom: 16px;
+    right: 16px;
+    padding: 6px 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .golden-aura, .mandala-spin, .diya-flame {
+    animation: none !important;
+  }
+}
+
+/* Navigation & Mobile Utilities */
+@media (max-width: 960px) {
+  .desktop-nav {
+    display: none !important;
+  }
+  .mobile-nav-toggle {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+
+
