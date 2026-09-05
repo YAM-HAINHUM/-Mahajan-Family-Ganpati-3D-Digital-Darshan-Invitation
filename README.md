@@ -670,7 +670,7 @@ May Lord Ganesha bless everyone with:
 
 # 👨💻 Developer
 
-### Yash Mahajan
+### YASH ANIL MAHAJAN
 
 💻 Developer & Designer
 🎨 UI/UX Enthusiast
@@ -722,5 +722,5 @@ Please respect the ownership of:
 ---
 
 <p align="center">
-Made with ❤️, 🙏 devotion & 💻 technology by <strong>Yash Mahajan</strong>
+Made with ❤️, 🙏 devotion & 💻 technology by <strong>YASH ANIL MAHAJAN</strong>
 </p>
