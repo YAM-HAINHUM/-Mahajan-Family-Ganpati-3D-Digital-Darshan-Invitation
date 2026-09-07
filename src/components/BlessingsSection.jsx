@@ -211,7 +211,7 @@ export default function BlessingsSection({ t, lang = 'mr' }) {
           </div>
 
           <div style={{ marginTop: '1.5rem', color: '#C99A3D', fontSize: '0.78rem', letterSpacing: '0.08em' }}>
-            {lang === 'mr' ? 'निर्मिती: ' : 'Made by '}
+            {lang === 'mr' ? 'निर्माता: ' : 'Made by '}
             <strong style={{ color: '#FFF3D1' }}>YAM</strong>
             {lang === 'mr' ? ' (यश अनिल महाजन)' : ' (Yash Anil Mahajan)'}
           </div>
