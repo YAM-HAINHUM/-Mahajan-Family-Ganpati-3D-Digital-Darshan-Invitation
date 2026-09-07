@@ -713,7 +713,7 @@ Please respect the ownership of:
 
 ### 🌺 मंगलमूर्ती मोरया 🌺
 
-**Welcome to the Mahajan Family Ganpati Digital Darshan Experience.**
+**Mahajan Family Welcome's you to the Ganpati Darshan 2026.**
 
 🪔 May Bappa's blessings bring happiness, prosperity and peace to every home. 🪔
 
