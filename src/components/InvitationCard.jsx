@@ -2,8 +2,6 @@ import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, MailOpen, Share2, Check, FileText, Image, Loader2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import html2canvas from 'html2canvas';
-import { jsPDF } from 'jspdf';
 import { eventData } from '../data/eventData';
 
 export default function InvitationCard({ t, lang = 'mr' }) {
@@ -47,14 +45,12 @@ export default function InvitationCard({ t, lang = 'mr' }) {
     }
   };
 
-  const handleDownloadImage = async () => {
-    if (!cardRef.current) return;
+  const handleDownloadImage = () => {
     setIsGeneratingImg(true);
     try {
-      const canvas = await html2canvas(cardRef.current, { scale: 2.5, useCORS: true, backgroundColor: '#35070C' });
       const link = document.createElement('a');
-      link.download = `Ganpati_Invitation_Mahajan_Family_${lang.toUpperCase()}.png`;
-      link.href = canvas.toDataURL('image/png');
+      link.download = 'invitation_card.png';
+      link.href = '/assets/gallery/invitation_card.png';
       link.click();
       setDownloadSuccess(true);
       setTimeout(() => setDownloadSuccess(false), 3000);
@@ -65,16 +61,13 @@ export default function InvitationCard({ t, lang = 'mr' }) {
     }
   };
 
-  const handleDownloadPdf = async () => {
-    if (!cardRef.current) return;
+  const handleDownloadPdf = () => {
     setIsGeneratingPdf(true);
     try {
-      const canvas = await html2canvas(cardRef.current, { scale: 2, useCORS: true, backgroundColor: '#35070C' });
-      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a5' });
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-      pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save(`Ganpati_Invitation_Mahajan_Family_${lang.toUpperCase()}.pdf`);
+      const link = document.createElement('a');
+      link.download = 'invitation_card.pdf';
+      link.href = '/assets/gallery/invitation_card.pdf';
+      link.click();
       setDownloadSuccess(true);
       setTimeout(() => setDownloadSuccess(false), 3000);
     } catch (err) {
